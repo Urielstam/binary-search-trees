@@ -1,4 +1,4 @@
-const node = (data, left, right) => {
+const node = (data = null, left = null, right = null) => {
     return {
         data,
         left,
@@ -17,20 +17,33 @@ const tree = ((arr) => {
 })();
 
 
+const prettyPrint = (node, prefix = '', isLeft = true) => {
+    if (node === null) {
+       return;
+    }
+    if (node.right !== null) {
+      prettyPrint(node.right, `${prefix}${isLeft ? '│   ' : '    '}`, false);
+    }
+    console.log(`${prefix}${isLeft ? '└── ' : '┌── '}${node.data}`);
+    if (node.left !== null) {
+      prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
+    }
+  }
+
+
 const buildTree = (arr) => {
-    // let sortedArr = [...new Set(arr).sort((a, b) => a -b)];
-    arr.sort((a, b) => a - b);
-    let uniqueArr = arr.filter((value, index, self) => self.indexOf(value) === index);
-    // console.log(uniqueArr)
-    if(uniqueArr.length <= 0) return null
-    
-    let mid = Math.floor(uniqueArr.length / 2)
+    let sortedArr = [...new Set(arr)].sort((a, b) => a -b);
+    // arr.sort((a, b) => a - b);
+    // let sortedArr = arr.filter((value, index, self) => self.indexOf(value) === index);
+    if(sortedArr.length <= 0) return null
+    let mid = parseInt(sortedArr.length / 2);
     // console.log(mid);
 
-    let rootNode = node(uniqueArr[mid]);
+    let rootNode = node(sortedArr[mid]);
     
-    rootNode.left = buildTree(uniqueArr.slice(0, mid));
-    rootNode.right = buildTree(uniqueArr.slice(mid + 1));
+    rootNode.left = buildTree(sortedArr.slice(0, mid));
+    rootNode.right = buildTree(sortedArr.slice(mid + 1));
+
     
     return rootNode;
 
@@ -39,4 +52,5 @@ const buildTree = (arr) => {
 const rootNode = buildTree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 
 console.log(rootNode.data);
+prettyPrint(rootNode);
 
