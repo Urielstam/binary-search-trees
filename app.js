@@ -6,7 +6,7 @@ const node = (data = null, left = null, right = null) => {
     }
 }
 
-const buildTree = (arr, start = 0, end = arr.length) => {
+const buildTree = (arr, start = 0, end = arr.length -1) => {
 
 
     if (start > end) return null;
