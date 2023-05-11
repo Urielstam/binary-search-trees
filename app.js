@@ -84,13 +84,29 @@ const tree = (arr) => {
       return rootNode
     }
 
+    const levelOrder = (callback) => {
+      // Traverse tree using breadth-first
+      if (root === null) return [];
+      const queue = [root];
+      const result = [];
+      while (queue.length > 0) {
+        const node = queue.shift();
+        if (node.left !== null) queue.push(node.left);
+        if (node.right !== null) queue.push(node.right);
+        if (callback) callback(node);
+        else result.push(node.data)
+      }
+      return result
+    }
+
 
     return {
         root,
         sortedArr,
         insertNode,
         deleteNode,
-        find
+        find,
+        levelOrder
     }
 };
 
@@ -115,5 +131,6 @@ console.log(newTree.root.data);
 // newTree.insertNode(6)
 // newTree.deleteNode(4)
 prettyPrint(newTree.root);
-console.log(newTree.find(324));
+// console.log(newTree.find(324));
+newTree.levelOrder((node) => console.log(node.data))
 
