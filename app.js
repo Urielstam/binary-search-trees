@@ -28,24 +28,60 @@ const tree = (arr) => {
       // if less move left
       // else move right
     //continue until hit leaf node -> than create leaf node accordingly
-    const insert = (value, rootNode = root) => {
+    const insertNode = (value, rootNode = root) => {
       if(rootNode === null) return node(value);
 
       if(value < rootNode.data) {
-        rootNode.left = insert(value, rootNode.left);
+        rootNode.left = insertNode(value, rootNode.left);
       } else {
-        rootNode.right = insert(value, rootNode.right);
+        rootNode.right = insertNode(value, rootNode.right);
       }
       return rootNode
 
     }
 
+    const minValue = (root) => {
+      let minV = root.data;
+      while (root.left != null) {
+        minV = root.left.data;
+        root = root.left;
+      }
+      return minV;
+    };
+
+    const deleteNode = (value, rootNode = root) => {
+      // base case tree is empty
+      if (rootNode === null) return rootNode;
+      // other wise recur down tree
+      if (value < rootNode.data) {
+        rootNode.left = deleteNode(value, rootNode.left);
+      } else if (value > rootNode.data) {
+        rootNode.right = deleteNode(value, rootNode.right);
+      } // if value is root.data
+      else {
+        // if node is leaf or one child
+        if (rootNode.left === null) {
+          return rootNode.right;
+        } else if (rootNode.right === null) {
+          return rootNode.left;
+        }
+        // with two children, find inorder successor
+        rootNode.data = minValue(rootNode.right);
+        // delete inorder successor
+        rootNode.right = deleteNode(rootNode.data, rootNode.right);
+      }
+      return rootNode;
+    }
+
+
     return {
         root,
         sortedArr,
-        insert
+        insertNode,
+        deleteNode
     }
 };
+
 
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -63,7 +99,8 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
 
 
 let newTree = tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
-console.log(newTree.root);
-newTree.insert(6)
+console.log(newTree.root.data);
+newTree.insertNode(6)
+newTree.deleteNode(4)
 prettyPrint(newTree.root);
 
