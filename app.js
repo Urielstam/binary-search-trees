@@ -73,12 +73,24 @@ const tree = (arr) => {
       return rootNode;
     }
 
+    const find = (value, rootNode = root) => {
+      if (rootNode === null) return false;
+      if(rootNode.data === value) return rootNode;
+      if (value < rootNode.data) {
+        return find(value, rootNode.left);
+      } else if (value > rootNode.data) {
+        return find(value, rootNode.right);
+      }
+      return rootNode
+    }
+
 
     return {
         root,
         sortedArr,
         insertNode,
-        deleteNode
+        deleteNode,
+        find
     }
 };
 
@@ -100,7 +112,8 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
 
 let newTree = tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 console.log(newTree.root.data);
-newTree.insertNode(6)
-newTree.deleteNode(4)
+// newTree.insertNode(6)
+// newTree.deleteNode(4)
 prettyPrint(newTree.root);
+console.log(newTree.find(324));
 
