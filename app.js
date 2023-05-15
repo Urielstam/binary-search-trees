@@ -131,6 +131,15 @@ const tree = (arr) => {
     return Math.max(leftHeight, rightHeight) + 1;
   };
 
+  const depth = (node, rootNode = root, level = 0) => {
+    if (!node) return null;
+    if (rootNode === null) return 0;
+    if (rootNode.data === node.data) return level;
+    const count = depth(node, rootNode.left, level + 1);
+    if (count !== 0) return count;
+    return depth(node, rootNode.right, level + 1);
+  };
+
   return {
     root,
     sortedArr,
@@ -141,7 +150,8 @@ const tree = (arr) => {
     inorder,
     preorder,
     postorder,
-    height
+    height,
+    depth
   };
 };
 
@@ -160,9 +170,9 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
 
 const newTree = tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 console.log(newTree.height(newTree.root));
+console.log(newTree.depth(newTree.find(8)));
 console.log(newTree.root.data);
 // newTree.insertNode(6)
 // newTree.deleteNode(4)
 prettyPrint(newTree.root);
-// console.log(newTree.find(324));
 newTree.postorder((node) => console.log(node.data));
