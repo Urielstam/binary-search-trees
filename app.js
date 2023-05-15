@@ -96,13 +96,24 @@ const tree = (arr) => {
     return result;
   };
 
+  const inorder = (callback, rootNode = root, result = []) => {
+    if (rootNode === null) return [];
+    // if root.left then callback and do so for all left
+    inorder(callback, rootNode.left, result);
+    if (callback) callback(rootNode);
+    else result.push(rootNode.data);
+    inorder(callback, rootNode.right, result);
+    return result;
+  };
+
   return {
     root,
     sortedArr,
     insertNode,
     deleteNode,
     find,
-    levelOrder
+    levelOrder,
+    inorder
   };
 };
 
@@ -125,4 +136,4 @@ console.log(newTree.root.data);
 // newTree.deleteNode(4)
 prettyPrint(newTree.root);
 // console.log(newTree.find(324));
-newTree.levelOrder((node) => console.log(node.data));
+newTree.inorder((node) => console.log(node.data));
