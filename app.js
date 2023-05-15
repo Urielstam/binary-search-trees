@@ -106,6 +106,24 @@ const tree = (arr) => {
     return result;
   };
 
+  const preorder = (callback, rootNode = root, result = []) => {
+    if (rootNode === null) return [];
+    if (callback) callback(rootNode);
+    else result.push(rootNode.data);
+    preorder(callback, rootNode.left, result);
+    preorder(callback, rootNode.right, result);
+    return result;
+  };
+
+  const postorder = (callback, rootNode = root, result = []) => {
+    if (rootNode === null) return [];
+    postorder(callback, rootNode.left, result);
+    postorder(callback, rootNode.right, result);
+    if (callback) callback(rootNode);
+    else result.push(rootNode.data);
+    return result;
+  };
+
   return {
     root,
     sortedArr,
@@ -113,7 +131,9 @@ const tree = (arr) => {
     deleteNode,
     find,
     levelOrder,
-    inorder
+    inorder,
+    preorder,
+    postorder
   };
 };
 
@@ -136,4 +156,4 @@ console.log(newTree.root.data);
 // newTree.deleteNode(4)
 prettyPrint(newTree.root);
 // console.log(newTree.find(324));
-newTree.inorder((node) => console.log(node.data));
+newTree.postorder((node) => console.log(node.data));
