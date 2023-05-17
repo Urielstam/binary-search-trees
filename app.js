@@ -6,19 +6,20 @@ const node = (data = null, left = null, right = null) => ({
   right
 });
 
-const buildTree = (arr, start = 0, end = arr.length - 1) => {
-  if (start > end) return null;
-  const mid = Math.floor((start + end) / 2);
-  const rootNode = node(arr[mid]);
-  rootNode.left = buildTree(arr, start, mid - 1);
-  rootNode.right = buildTree(arr, mid + 1, end);
-
-  return rootNode;
-};
-
 const tree = (arr) => {
   const sortedArr = [...new Set(arr)].sort((a, b) => a - b);
-  const root = buildTree(sortedArr);
+
+  const buildTree = (arr, start = 0, end = arr.length - 1) => {
+    if (start > end) return null;
+    const mid = Math.floor((start + end) / 2);
+    const rootNode = node(arr[mid]);
+    rootNode.left = buildTree(arr, start, mid - 1);
+    rootNode.right = buildTree(arr, mid + 1, end);
+
+    return rootNode;
+  };
+
+  let root = buildTree(sortedArr);
 
   // compare val to root
   // if less move left
@@ -159,11 +160,12 @@ const tree = (arr) => {
     return balanced;
   };
 
-  // const rebalance = () => {
-  //   const inorderList = inorder();
-  //   root = buildTree(inorderList);
-  //   console.log(root);
-  // };
+  const rebalance = () => {
+    const arr = levelOrder();
+    arr.sort((a, b) => a - b);
+    root = buildTree(arr);
+    return root;
+  };
 
   return {
     root,
@@ -201,10 +203,14 @@ console.log(newTree.depth(newTree.find(8)));
 console.log(newTree.root.data);
 newTree.insertNode(6);
 // newTree.insertNode(4);
+// newTree.insertNode(4);
 
 // newTree.deleteNode(4)
 prettyPrint(newTree.root);
 // newTree.postorder((node) => console.log(node.data));
 console.log(newTree.isBalanced(newTree.root));
-newTree.rebalance();
-console.log(newTree.isBalanced(newTree.root));
+const second = newTree.rebalance();
+
+console.log(second);
+prettyPrint(second);
+console.log(newTree.isBalanced(second.root));
