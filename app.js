@@ -197,20 +197,20 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
   }
 };
 
-const newTree = tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
-console.log(newTree.height(newTree.root));
-console.log(newTree.depth(newTree.find(8)));
-console.log(newTree.root.data);
-newTree.insertNode(6);
-// newTree.insertNode(4);
-// newTree.insertNode(4);
+// const newTree = tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+// console.log(newTree.height(newTree.root));
+// console.log(newTree.depth(newTree.find(8)));
+// console.log(newTree.root.data);
+// newTree.insertNode(6);
+// // newTree.insertNode(4);
+// // newTree.insertNode(4);
 
-// newTree.deleteNode(4)
-prettyPrint(newTree.root);
-// newTree.postorder((node) => console.log(node.data));
-console.log(newTree.isBalanced(newTree.root));
-const second = newTree.rebalance();
+// // newTree.deleteNode(4)
+// prettyPrint(newTree.root);
+// // newTree.postorder((node) => console.log(node.data));
+// console.log(newTree.isBalanced(newTree.root));
+// const second = newTree.rebalance();
 
-console.log(second);
-prettyPrint(second);
-console.log(newTree.isBalanced(second.root));
+// console.log(second);
+// prettyPrint(second);
+// console.log(newTree.isBalanced(second.root));
