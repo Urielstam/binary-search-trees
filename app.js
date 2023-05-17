@@ -140,6 +140,31 @@ const tree = (arr) => {
     return depth(node, rootNode.right, level + 1);
   };
 
+  const testBalanced = (rootNode) => {
+    // Check if balanced
+    // check heights of left and right tree
+    if (rootNode == null) return 0;
+    const leftHeight = testBalanced(rootNode.left);
+    const rightHeight = testBalanced(rootNode.right);
+    const diff = Math.abs(leftHeight - rightHeight);
+
+    if (leftHeight === -1 || rightHeight === -1 || diff > 1) {
+      return -1;
+    }
+    return Math.max(leftHeight, rightHeight) + 1;
+  };
+
+  const isBalanced = (rootNode) => {
+    const balanced = testBalanced(rootNode) !== -1;
+    return balanced;
+  };
+
+  // const rebalance = () => {
+  //   const inorderList = inorder();
+  //   root = buildTree(inorderList);
+  //   console.log(root);
+  // };
+
   return {
     root,
     sortedArr,
@@ -151,7 +176,9 @@ const tree = (arr) => {
     preorder,
     postorder,
     height,
-    depth
+    depth,
+    isBalanced,
+    rebalance
   };
 };
 
@@ -172,7 +199,12 @@ const newTree = tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 console.log(newTree.height(newTree.root));
 console.log(newTree.depth(newTree.find(8)));
 console.log(newTree.root.data);
-// newTree.insertNode(6)
+newTree.insertNode(6);
+// newTree.insertNode(4);
+
 // newTree.deleteNode(4)
 prettyPrint(newTree.root);
-newTree.postorder((node) => console.log(node.data));
+// newTree.postorder((node) => console.log(node.data));
+console.log(newTree.isBalanced(newTree.root));
+newTree.rebalance();
+console.log(newTree.isBalanced(newTree.root));
